@@ -2,7 +2,7 @@
 function App() {
   return (
     <>
-      project ready for develop
+      project ready for developing
     </>
   )
 }
