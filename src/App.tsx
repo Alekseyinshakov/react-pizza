@@ -6,13 +6,13 @@ function App() {
       Hello world
       <ul className={s.list}>
         <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
-        <li>qwerty</li>
+        <li>qwerty2</li>
+        <li>qwerty3</li>
+        <li>qwerty4</li>
+        <li>qwerty5</li>
+        <li>qwerty6</li>
+        <li>qwerty7</li>
+        <li>qwerty8</li>
       </ul>
     </>
   )
