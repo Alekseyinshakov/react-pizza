@@ -1,8 +1,17 @@
-const PizzaBlock = () => {
+import { useState } from 'react'
+
+type PizzaBlockProps = {
+  title: string
+  price: number
+}
+
+const PizzaBlock = ({ title, price }: PizzaBlockProps) => {
+  const [count, setCount] = useState(0)
+
   return (
     <div className='pizza-block'>
       <img className='pizza-block__image' src='img/pizzas-img/pizza-1.jpg' alt='PizzaBlock' />
-      <h4 className='pizza-block__title'>Чизбургер-пицца</h4>
+      <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
           <li className='active'>тонкое</li>
@@ -14,8 +23,13 @@ const PizzaBlock = () => {
           <li>40 см.</li>
         </ul>
       </div>
-      <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>от 395 ₽</div>
+      <div
+        onClick={() => {
+          setCount(count + 1)
+        }}
+        className='pizza-block__bottom'
+      >
+        <div className='pizza-block__price'>от {price} ₽</div>
         <div className='button button--outline button--add'>
           <svg
             width='12'
@@ -30,7 +44,7 @@ const PizzaBlock = () => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          <i>{count}</i>
         </div>
       </div>
     </div>
