@@ -1,8 +1,6 @@
 import './styles/app.scss'
 
 function App() {
-  const abra = { a: 1, b: 2, c: 3 }
-
   return (
     <>
       <div className='wrapper'>
