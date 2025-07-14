@@ -3,14 +3,15 @@ import { useState } from 'react'
 type PizzaBlockProps = {
   title: string
   price: number
+  img: string
 }
 
-const PizzaBlock = ({ title, price }: PizzaBlockProps) => {
+const PizzaBlock = ({ title, price, img }: PizzaBlockProps) => {
   const [count, setCount] = useState(0)
 
   return (
     <div className='pizza-block'>
-      <img className='pizza-block__image' src='img/pizzas-img/pizza-1.jpg' alt='PizzaBlock' />
+      <img className='pizza-block__image' src={img} alt='PizzaBlock' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
