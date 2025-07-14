@@ -1,35 +1,57 @@
 import { useState } from 'react'
 
 type PizzaBlockProps = {
+  id: number
+  imageUrl: string
   title: string
+  types: number[]
+  sizes: number[]
   price: number
-  img: string
+  category: number
+  rating: number
 }
 
-const PizzaBlock = ({ title, price, img }: PizzaBlockProps) => {
-  const [count, setCount] = useState(0)
+const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaBlockProps) => {
+  const [sizeIndex, setsizeIndex] = useState(0)
+  const [typesIndex, setTypesIndex] = useState(0)
+
+  const typeNames = ['тонкое', 'традиционное']
 
   return (
     <div className='pizza-block'>
-      <img className='pizza-block__image' src={img} alt='PizzaBlock' />
+      <img className='pizza-block__image' src={imageUrl} alt='PizzaBlock' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
-          <li className='active'>тонкое</li>
-          <li>традиционное</li>
+          {types.map((type) => {
+            return (
+              <li
+                onClick={() => {
+                  setTypesIndex(type)
+                }}
+                className={type === typesIndex ? 'active' : ''}
+              >
+                {typeNames[type]}
+              </li>
+            )
+          })}
         </ul>
         <ul>
-          <li className='active'>26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, i) => {
+            return (
+              <li
+                onClick={() => {
+                  setsizeIndex(i)
+                }}
+                className={i === sizeIndex ? 'active' : ''}
+              >
+                {size} см
+              </li>
+            )
+          })}
         </ul>
       </div>
-      <div
-        onClick={() => {
-          setCount(count + 1)
-        }}
-        className='pizza-block__bottom'
-      >
+      <div className='pizza-block__bottom'>
         <div className='pizza-block__price'>от {price} ₽</div>
         <div className='button button--outline button--add'>
           <svg
@@ -45,7 +67,7 @@ const PizzaBlock = ({ title, price, img }: PizzaBlockProps) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>{count}</i>
+          <i>0</i>
         </div>
       </div>
     </div>

@@ -6,7 +6,6 @@ import PizzaBlock from './components/PizzaBlock.tsx'
 import pizzas from './assets/pizzas.json'
 
 function App() {
-  console.log(pizzas)
   return (
     <>
       <div className='wrapper'>
@@ -20,7 +19,7 @@ function App() {
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>
               {pizzas.map((obj) => {
-                return <PizzaBlock title={obj.title} price={obj.price} img={obj.imageUrl} />
+                return <PizzaBlock {...obj} />
               })}
             </div>
           </div>
