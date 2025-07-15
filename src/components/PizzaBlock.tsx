@@ -1,17 +1,7 @@
 import { useState } from 'react'
+import type { PizzaType } from '../types.ts'
 
-type PizzaBlockProps = {
-  id: number
-  imageUrl: string
-  title: string
-  types: number[]
-  sizes: number[]
-  price: number
-  category: number
-  rating: number
-}
-
-const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaBlockProps) => {
+const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaType) => {
   const [sizeIndex, setsizeIndex] = useState(0)
   const [typesIndex, setTypesIndex] = useState(0)
 
@@ -26,6 +16,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaBlockProps) =
           {types.map((type) => {
             return (
               <li
+                key={type}
                 onClick={() => {
                   setTypesIndex(type)
                 }}
@@ -40,6 +31,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaBlockProps) =
           {sizes.map((size, i) => {
             return (
               <li
+                key={i}
                 onClick={() => {
                   setsizeIndex(i)
                 }}
