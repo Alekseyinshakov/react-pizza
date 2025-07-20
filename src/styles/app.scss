@@ -29,7 +29,9 @@ body {
   &__items {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    row-gap: 65px;
+    column-gap: 35px;
   }
 
   &__top {
