@@ -30,8 +30,8 @@ const Main = () => {
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
         {isLoading
-          ? new Array(8).fill(7).map(() => {
-              return <PizzaSkeleton />
+          ? new Array(8).fill(7).map((_, index) => {
+              return <PizzaSkeleton key={index} />
             })
           : products.map((obj) => {
               return <PizzaBlock key={obj.id} {...obj} />
