@@ -18,11 +18,17 @@ body {
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
+  @media (max-width: 670px) {
+    width: calc(100vw - 30px);
+    margin: 15px auto;
+  }
 }
 
 .content {
   padding: 40px 0;
-
+  @media (max-width: 670px) {
+    padding-top: 20px;
+  }
   &__title {
     margin: 35px 0;
   }
@@ -39,6 +45,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 1300px) {
+      flex-direction: column;
+      row-gap: 20px;
+    }
   }
 }
 
