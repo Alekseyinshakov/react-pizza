@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
-const Sort = () => {
-  const [open, setOpen] = useState(false)
+type SortProps = {
+  activeSort: number
+  setActiveSort: (value: number) => void
+}
 
-  const [activeSort, setActiveSort] = useState(0)
+const Sort = ({ activeSort, setActiveSort }: SortProps) => {
+  const [open, setOpen] = useState(false)
 
   const sortVariants = ['популярности', 'цене', 'алфавиту']
 
