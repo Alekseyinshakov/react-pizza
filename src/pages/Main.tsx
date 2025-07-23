@@ -10,8 +10,20 @@ const Main = () => {
 
   const [isLoading, setIsLoading] = useState(true)
 
+  const [activeCategory, setActiveCategory] = useState(0)
+
+  const [activeSort, setActiveSort] = useState(0)
+
+  const sortVriants = ['rating', 'price', 'title']
+
   useEffect(() => {
-    fetch('https://68769703814c0dfa653c9f80.mockapi.io/products')
+    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?sortBy=${sortVriants[activeSort]}&order=desc`
+    if (activeCategory) {
+      URL += `&category=${activeCategory}`
+    }
+    setIsLoading(true)
+
+    fetch(URL)
       .then((res) => {
         return res.json()
       })
@@ -19,13 +31,13 @@ const Main = () => {
         setProducts(data)
         setIsLoading(false)
       })
-  }, [])
+  }, [activeCategory, activeSort])
 
   return (
     <>
       <div className='content__top'>
-        <Categories />
-        <Sort />
+        <Categories {...{ activeCategory, setActiveCategory }} />
+        <Sort {...{ activeSort, setActiveSort }} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>

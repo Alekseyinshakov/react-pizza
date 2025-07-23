@@ -1,8 +1,9 @@
-import { useState } from 'react'
+type CategoriesProps = {
+  activeCategory: number
+  setActiveCategory: (value: number) => void
+}
 
-const Categories = () => {
-  const [activeCategory, setActiveCategory] = useState(0)
-
+const Categories = ({ activeCategory, setActiveCategory }: CategoriesProps) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
   return (
