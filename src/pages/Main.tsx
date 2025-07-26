@@ -64,7 +64,9 @@ const Main = ({ searchString }: MainProps) => {
         totalItems={10}
         limit={4}
         currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
+        updatePage={(num) => {
+          setCurrentPage(num)
+        }}
       />
     </>
   )

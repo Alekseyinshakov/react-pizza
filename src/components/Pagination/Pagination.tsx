@@ -1,24 +1,23 @@
 import s from './Pagination.module.scss'
 import PrevArrow from '../../assets/icons/arrow-prev.svg?react'
 import NextArrow from '../../assets/icons/arrow-next.svg?react'
-import type { Dispatch, SetStateAction } from 'react'
 
 type PaginationProps = {
   currentPage: number
-  setCurrentPage: Dispatch<SetStateAction<number>>
+  updatePage: (num: number) => void
   totalItems: number
   limit: number
 }
 
-const Pagination = ({ currentPage, setCurrentPage, totalItems, limit }: PaginationProps) => {
+const Pagination = ({ currentPage, updatePage, totalItems, limit }: PaginationProps) => {
   const totalPages = Math.ceil(totalItems / limit)
 
   function nextHandler() {
-    setCurrentPage(currentPage + 1)
+    updatePage(currentPage + 1)
   }
 
   function prevHandler() {
-    setCurrentPage(currentPage - 1)
+    updatePage(currentPage - 1)
   }
 
   return (
