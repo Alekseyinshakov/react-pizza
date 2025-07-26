@@ -4,7 +4,7 @@ const PizzaSkeleton = () => (
   <ContentLoader
     speed={2}
     width={280}
-    height={457}
+    height={467}
     viewBox='0 0 280 457'
     backgroundColor='#f3f3f3'
     foregroundColor='#ecebeb'

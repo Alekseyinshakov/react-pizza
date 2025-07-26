@@ -24,15 +24,17 @@ const Search = ({ searchString, setSearchString }: SearchProps) => {
           setSearchString(event.target.value)
         }}
       />
-      <img
-        src={crossSvg}
-        alt='Cross'
-        className={s.cross}
-        onClick={() => {
-          setSearchString('')
-        }}
-        onMouseDown={focusInput}
-      />
+      {searchString && (
+        <img
+          src={crossSvg}
+          alt='Cross'
+          className={s.cross}
+          onClick={() => {
+            setSearchString('')
+          }}
+          onMouseDown={focusInput}
+        />
+      )}
     </div>
   )
 }

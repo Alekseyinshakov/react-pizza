@@ -4,6 +4,7 @@ import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
 import PizzaBlock from '../components/PizzaBlock.tsx'
 import { useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
+import Pagination from '../components/Pagination/Pagination.tsx'
 
 type MainProps = { searchString: string }
 
@@ -12,10 +13,12 @@ const Main = ({ searchString }: MainProps) => {
   const [isLoading, setIsLoading] = useState(true)
   const [activeCategory, setActiveCategory] = useState(0)
   const [activeSort, setActiveSort] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+
   const sortVariants = ['rating', 'price', 'title']
 
   useEffect(() => {
-    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?sortBy=${sortVariants[activeSort]}&order=desc`
+    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=desc`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
     }
@@ -27,13 +30,19 @@ const Main = ({ searchString }: MainProps) => {
 
     fetch(URL)
       .then((res) => {
+        if (!res.ok) {
+          if (res.status === 404) {
+            return []
+          }
+          throw new Error(`HTTP error! Status: ${res.status}`)
+        }
         return res.json()
       })
       .then((data: PizzaType[]) => {
         setProducts(data)
         setIsLoading(false)
       })
-  }, [activeCategory, activeSort, searchString])
+  }, [activeCategory, activeSort, searchString, currentPage])
 
   return (
     <>
@@ -44,13 +53,19 @@ const Main = ({ searchString }: MainProps) => {
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
         {isLoading
-          ? new Array(8).fill(7).map((_, index) => {
+          ? new Array(4).fill(7).map((_, index) => {
               return <PizzaSkeleton key={index} />
             })
           : products.map((obj) => {
               return <PizzaBlock key={obj.id} {...obj} />
             })}
       </div>
+      <Pagination
+        totalItems={10}
+        limit={4}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   )
 }
