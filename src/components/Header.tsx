@@ -1,8 +1,10 @@
 import { Link } from 'react-router'
 import Search from './Search/Search.tsx'
-import type { Dispatch, SetStateAction } from 'react'
 
-type HeaderProps = { searchString: string; setSearchString: Dispatch<SetStateAction<string>> }
+type HeaderProps = {
+  searchString: string
+  setSearchString: (str: string) => void
+}
 
 const Header = ({ searchString, setSearchString }: HeaderProps) => {
   return (

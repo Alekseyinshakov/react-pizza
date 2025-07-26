@@ -12,7 +12,12 @@ function App() {
   return (
     <>
       <div className='wrapper'>
-        <Header searchString={searchString} setSearchString={setSearchString} />
+        <Header
+          searchString={searchString}
+          setSearchString={(str) => {
+            setSearchString(str)
+          }}
+        />
         <div className='content'>
           <div className='container'>
             <Routes>
