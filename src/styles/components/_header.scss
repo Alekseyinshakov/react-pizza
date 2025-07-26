@@ -8,10 +8,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    @media (max-width: 670px) {
-      flex-direction: column;
-      row-gap: 25px;
+    flex-wrap: wrap;
+    row-gap: 25px;
+    column-gap: 20px;
+    @media (max-width: 850px) {
+      //flex-direction: column;
+      justify-content: center;
     }
   }
 

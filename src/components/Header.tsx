@@ -1,6 +1,10 @@
 import { Link } from 'react-router'
+import Search from './Search/Search.tsx'
+import type { Dispatch, SetStateAction } from 'react'
 
-const Header = () => {
+type headerProps = { searchString: string; setSearchString: Dispatch<SetStateAction<string>> }
+
+const Header = ({ searchString, setSearchString }: headerProps) => {
   return (
     <div className='header'>
       <div className='container'>
@@ -11,6 +15,9 @@ const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </Link>
+
+        <Search />
+
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
             <span>520 ₽</span>
