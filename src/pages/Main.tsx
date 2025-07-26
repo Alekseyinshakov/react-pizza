@@ -5,22 +5,24 @@ import PizzaBlock from '../components/PizzaBlock.tsx'
 import { useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 
-const Main = () => {
+type MainProps = { searchString: string }
+
+const Main = ({ searchString }: MainProps) => {
   const [products, setProducts] = useState<PizzaType[]>([])
-
   const [isLoading, setIsLoading] = useState(true)
-
   const [activeCategory, setActiveCategory] = useState(0)
-
   const [activeSort, setActiveSort] = useState(0)
-
-  const sortVriants = ['rating', 'price', 'title']
+  const sortVariants = ['rating', 'price', 'title']
 
   useEffect(() => {
-    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?sortBy=${sortVriants[activeSort]}&order=desc`
+    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?sortBy=${sortVariants[activeSort]}&order=desc`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
     }
+    if (searchString) {
+      URL += `&search=${searchString}`
+    }
+
     setIsLoading(true)
 
     fetch(URL)
@@ -31,7 +33,7 @@ const Main = () => {
         setProducts(data)
         setIsLoading(false)
       })
-  }, [activeCategory, activeSort])
+  }, [activeCategory, activeSort, searchString])
 
   return (
     <>

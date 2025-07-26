@@ -1,22 +1,21 @@
 import s from './Search.module.scss'
 import searchSvg from '../../assets/icons/search-svgrepo-com.svg'
 import crossSvg from '../../assets/icons/cross-svgrepo-com.svg'
-import { type Dispatch, type SetStateAction, useRef } from 'react'
+import React, { type Dispatch, type SetStateAction, useRef } from 'react'
 
 type SearchProps = { searchString: string; setSearchString: Dispatch<SetStateAction<string>> }
 
 const Search = ({ searchString, setSearchString }: SearchProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const focusInput = (e) => {
+  const focusInput = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     inputRef.current?.focus()
-    console.log('Nu sho tam')
   }
 
   return (
-    <div className={s.root} onMouseDown={focusInput}>
-      <img src={searchSvg} alt='Search' className={s.icon} />
+    <div className={s.root}>
+      <img onMouseDown={focusInput} src={searchSvg} alt='Search' className={s.icon} />
       <input
         ref={inputRef}
         type='text'
@@ -32,6 +31,7 @@ const Search = ({ searchString, setSearchString }: SearchProps) => {
         onClick={() => {
           setSearchString('')
         }}
+        onMouseDown={focusInput}
       />
     </div>
   )

@@ -16,7 +16,7 @@ function App() {
         <div className='content'>
           <div className='container'>
             <Routes>
-              <Route index element={<Main />} />
+              <Route index element={<Main searchString={searchString} />} />
               <Route path='cart' element={<CartPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
