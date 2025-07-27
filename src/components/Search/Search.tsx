@@ -1,14 +1,12 @@
 import s from './Search.module.scss'
 import searchSvg from '../../assets/icons/search-svgrepo-com.svg'
 import crossSvg from '../../assets/icons/cross-svgrepo-com.svg'
-import React, { type ChangeEvent, useRef } from 'react'
+import React, { type ChangeEvent, useContext, useRef } from 'react'
+import { MyContext } from '../../MyContext.ts'
 
-type SearchProps = {
-  searchString: string
-  setSearchString: (str: string) => void
-}
+const Search = () => {
+  const { searchString, setSearchString } = useContext(MyContext)
 
-const Search = ({ searchString, setSearchString }: SearchProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const focusInput = (e: React.MouseEvent<HTMLDivElement>) => {

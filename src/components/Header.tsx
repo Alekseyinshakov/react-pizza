@@ -1,12 +1,7 @@
 import { Link } from 'react-router'
 import Search from './Search/Search.tsx'
 
-type HeaderProps = {
-  searchString: string
-  setSearchString: (str: string) => void
-}
-
-const Header = ({ searchString, setSearchString }: HeaderProps) => {
+const Header = () => {
   return (
     <div className='header'>
       <div className='container'>
@@ -18,7 +13,7 @@ const Header = ({ searchString, setSearchString }: HeaderProps) => {
           </div>
         </Link>
 
-        <Search searchString={searchString} setSearchString={setSearchString} />
+        <Search />
 
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>

@@ -2,13 +2,14 @@ import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
 import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
 import PizzaBlock from '../components/PizzaBlock.tsx'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
+import { MyContext } from '../MyContext.ts'
 
-type MainProps = { searchString: string }
+const Main = () => {
+  const { searchString } = useContext(MyContext)
 
-const Main = ({ searchString }: MainProps) => {
   const [products, setProducts] = useState<PizzaType[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [activeCategory, setActiveCategory] = useState(0)
