@@ -2,22 +2,20 @@ import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
 import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
 import PizzaBlock from '../components/PizzaBlock.tsx'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
-import { MyContext } from '../MyContext.ts'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 
 const Main = () => {
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
-
-  const { searchString } = useContext(MyContext)
+  const searchString = useSelector((state: RootState) => state.searchReducer.value)
+  const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
 
   const [products, setProducts] = useState<PizzaType[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const [activeSort, setActiveSort] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
   const sortVariants = ['rating', 'price', 'title']
@@ -53,7 +51,7 @@ const Main = () => {
     <>
       <div className='content__top'>
         <Categories />
-        <Sort {...{ activeSort, setActiveSort }} />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>

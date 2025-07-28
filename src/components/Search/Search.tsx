@@ -1,11 +1,14 @@
 import s from './Search.module.scss'
 import searchSvg from '../../assets/icons/search-svgrepo-com.svg'
 import crossSvg from '../../assets/icons/cross-svgrepo-com.svg'
-import React, { type ChangeEvent, useContext, useRef } from 'react'
-import { MyContext } from '../../MyContext.ts'
+import React, { type ChangeEvent, useRef } from 'react'
+import { setSearchString } from '../../redux/slices/searchSlice.ts'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../../redux/store.ts'
 
 const Search = () => {
-  const { searchString, setSearchString } = useContext(MyContext)
+  const searchString = useSelector((state: RootState) => state.searchReducer.value)
+  const dispatch = useDispatch()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -15,7 +18,7 @@ const Search = () => {
   }
 
   const changeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchString(event.target.value)
+    dispatch(setSearchString(event.target.value))
   }
 
   return (

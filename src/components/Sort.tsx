@@ -1,17 +1,18 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../redux/store.ts'
+import { setActiveSort } from '../redux/slices/sortSlice.ts'
 
-type SortProps = {
-  activeSort: number
-  setActiveSort: (value: number) => void
-}
+const Sort = () => {
+  const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
+  const dispatch = useDispatch()
 
-const Sort = ({ activeSort, setActiveSort }: SortProps) => {
   const [open, setOpen] = useState(false)
 
   const sortVariants = ['популярности', 'цене', 'алфавиту']
 
   function handlerSortClick(id: number) {
-    setActiveSort(id)
+    dispatch(setActiveSort(id))
     setOpen(false)
   }
 
