@@ -6,13 +6,17 @@ import { useContext, useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
 import { MyContext } from '../MyContext.ts'
+import { useSelector } from 'react-redux'
+import type { RootState } from '../redux/store.ts'
 
 const Main = () => {
+  const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
+
   const { searchString } = useContext(MyContext)
 
   const [products, setProducts] = useState<PizzaType[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [activeCategory, setActiveCategory] = useState(0)
+
   const [activeSort, setActiveSort] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -48,7 +52,7 @@ const Main = () => {
   return (
     <>
       <div className='content__top'>
-        <Categories {...{ activeCategory, setActiveCategory }} />
+        <Categories />
         <Sort {...{ activeSort, setActiveSort }} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>

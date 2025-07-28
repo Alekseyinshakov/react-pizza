@@ -1,9 +1,12 @@
-type CategoriesProps = {
-  activeCategory: number
-  setActiveCategory: (value: number) => void
-}
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../redux/store.ts'
 
-const Categories = ({ activeCategory, setActiveCategory }: CategoriesProps) => {
+import { setActiveCategory } from '../redux/slices/categorySlice.ts'
+
+const Categories = () => {
+  const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
+  const dispatch = useDispatch()
+
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
 
   return (
@@ -13,7 +16,7 @@ const Categories = ({ activeCategory, setActiveCategory }: CategoriesProps) => {
           return (
             <li
               key={index}
-              onClick={() => setActiveCategory(index)}
+              onClick={() => dispatch(setActiveCategory(index))}
               className={activeCategory === index ? 'active' : ''}
             >
               {value}
