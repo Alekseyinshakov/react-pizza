@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import categoryReducer from './slices/categorySlice.ts'
 import searchReducer from './slices/searchSlice.ts'
 import sortReducer from './slices/sortSlice.ts'
+import paginationReducer from './slices/paginationSlice.ts'
 
 export const store = configureStore({
   reducer: {
     categoryReducer,
     searchReducer,
     sortReducer,
+    paginationReducer,
   },
 })
 

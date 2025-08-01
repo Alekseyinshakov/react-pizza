@@ -1,23 +1,28 @@
 import s from './Pagination.module.scss'
 import PrevArrow from '../../assets/icons/arrow-prev.svg?react'
 import NextArrow from '../../assets/icons/arrow-next.svg?react'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../../redux/store.ts'
+import { paginationSlice, setCurrentPage } from '../../redux/slices/paginationSlice.ts'
+
+console.log(paginationSlice)
 
 type PaginationProps = {
-  currentPage: number
-  updatePage: (num: number) => void
   totalItems: number
   limit: number
 }
 
-const Pagination = ({ currentPage, updatePage, totalItems, limit }: PaginationProps) => {
+const Pagination = ({ totalItems, limit }: PaginationProps) => {
+  const currentPage = useSelector((state: RootState) => state.paginationReducer.value)
+  const dispatch = useDispatch()
   const totalPages = Math.ceil(totalItems / limit)
 
   function nextHandler() {
-    updatePage(currentPage + 1)
+    dispatch(setCurrentPage(currentPage + 1))
   }
 
   function prevHandler() {
-    updatePage(currentPage - 1)
+    dispatch(setCurrentPage(currentPage - 1))
   }
 
   return (

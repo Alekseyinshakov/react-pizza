@@ -12,11 +12,10 @@ const Main = () => {
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
   const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
+  const currentPage = useSelector((state: RootState) => state.paginationReducer.value)
 
   const [products, setProducts] = useState<PizzaType[]>([])
   const [isLoading, setIsLoading] = useState(true)
-
-  const [currentPage, setCurrentPage] = useState(1)
 
   const sortVariants = ['rating', 'price', 'title']
 
@@ -63,14 +62,7 @@ const Main = () => {
               return <PizzaBlock key={obj.id} {...obj} />
             })}
       </div>
-      <Pagination
-        totalItems={10}
-        limit={4}
-        currentPage={currentPage}
-        updatePage={(num) => {
-          setCurrentPage(num)
-        }}
-      />
+      <Pagination totalItems={10} limit={4} />
     </>
   )
 }
