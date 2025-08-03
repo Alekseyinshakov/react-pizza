@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
-import { setActiveSort } from '../redux/slices/sortSlice.ts'
+import { setActiveSort, setSortOrder } from '../redux/slices/sortSlice.ts'
 
 const Sort = () => {
   const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
+  const currentSortOrder = useSelector((state: RootState) => state.sortReducer.sortOrder)
+
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false)
@@ -16,10 +18,22 @@ const Sort = () => {
     setOpen(false)
   }
 
+  function changeOrderHandler() {
+    let order: string = ''
+    if (currentSortOrder === 'desc') {
+      order = 'asc'
+    } else {
+      order = 'desc'
+    }
+    dispatch(setSortOrder(order))
+  }
+
   return (
     <div className='sort'>
       <div className='sort__label'>
         <svg
+          onClick={() => changeOrderHandler()}
+          className={`sort__arrow-svg ${currentSortOrder === 'desc' && 'desc'}`}
           width='10'
           height='6'
           viewBox='0 0 10 6'

@@ -14,6 +14,7 @@ const Main = () => {
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
   const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
+  const sortOrder = useSelector((state: RootState) => state.sortReducer.sortOrder)
   const currentPage = useSelector((state: RootState) => state.paginationReducer.value)
 
   const [products, setProducts] = useState<PizzaType[]>([])
@@ -22,7 +23,7 @@ const Main = () => {
   const sortVariants = ['rating', 'price', 'title']
 
   useEffect(() => {
-    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=desc`
+    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
     }
@@ -44,22 +45,7 @@ const Main = () => {
       .finally(function () {
         setIsLoading(false)
       })
-
-    // fetch(URL)
-    //   .then((res) => {
-    //     if (!res.ok) {
-    //       if (res.status === 404) {
-    //         return []
-    //       }
-    //       throw new Error(`HTTP error! Status: ${res.status}`)
-    //     }
-    //     return res.json()
-    //   })
-    //   .then((data: PizzaType[]) => {
-    //     setProducts(data)
-    //     setIsLoading(false)
-    //   })
-  }, [activeCategory, activeSort, searchString, currentPage])
+  }, [activeCategory, activeSort, sortOrder, searchString, currentPage])
 
   return (
     <>
