@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
 import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
@@ -30,20 +32,34 @@ const Main = () => {
 
     setIsLoading(true)
 
-    fetch(URL)
-      .then((res) => {
-        if (!res.ok) {
-          if (res.status === 404) {
-            return []
-          }
-          throw new Error(`HTTP error! Status: ${res.status}`)
-        }
-        return res.json()
+    axios
+      .get(URL)
+      .then(function (response) {
+        setProducts(response.data)
+        console.log(response)
       })
-      .then((data: PizzaType[]) => {
-        setProducts(data)
+      .catch(function (error) {
+        setProducts([])
+        console.log(error)
+      })
+      .finally(function () {
         setIsLoading(false)
       })
+
+    // fetch(URL)
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       if (res.status === 404) {
+    //         return []
+    //       }
+    //       throw new Error(`HTTP error! Status: ${res.status}`)
+    //     }
+    //     return res.json()
+    //   })
+    //   .then((data: PizzaType[]) => {
+    //     setProducts(data)
+    //     setIsLoading(false)
+    //   })
   }, [activeCategory, activeSort, searchString, currentPage])
 
   return (
