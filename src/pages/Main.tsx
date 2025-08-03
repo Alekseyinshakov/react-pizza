@@ -36,7 +36,6 @@ const Main = () => {
       .get(URL)
       .then(function (response) {
         setProducts(response.data)
-        console.log(response)
       })
       .catch(function (error) {
         setProducts([])
