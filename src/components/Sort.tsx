@@ -60,6 +60,7 @@ const Sort = () => {
             {sortVariants.map((sortItem, index) => {
               return (
                 <li
+                  key={sortItem}
                   onClick={() => {
                     handlerSortClick(index)
                   }}

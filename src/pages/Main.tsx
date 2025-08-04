@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 
 import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
@@ -9,8 +10,11 @@ import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
+import { useNavigate } from 'react-router'
 
 const Main = () => {
+  const navigate = useNavigate()
+
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
   const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
@@ -21,6 +25,15 @@ const Main = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const sortVariants = ['rating', 'price', 'title']
+
+  useEffect(() => {
+    const params = qs.stringify({
+      activeCategory,
+      activeSort,
+      sortOrder,
+    })
+    navigate(`?${params}`)
+  }, [activeCategory, activeSort, sortOrder])
 
   useEffect(() => {
     let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
