@@ -8,12 +8,16 @@ import PizzaBlock from '../components/PizzaBlock.tsx'
 import { useEffect, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 import { useNavigate } from 'react-router'
+import { setActiveCategory } from '../redux/slices/categorySlice.ts'
+import { setActiveSort, setSortOrder } from '../redux/slices/sortSlice.ts'
+import { setCurrentPage } from '../redux/slices/paginationSlice.ts'
 
 const Main = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
@@ -27,13 +31,33 @@ const Main = () => {
   const sortVariants = ['rating', 'price', 'title']
 
   useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      console.log(params)
+      if (params.activeCategory) {
+        dispatch(setActiveCategory(+params.activeCategory))
+      }
+      if (params.sortOrder) {
+        dispatch(setSortOrder('' + params.sortOrder))
+      }
+      if (params.activeSort) {
+        dispatch(setActiveSort(+params.activeSort))
+      }
+      if (params.currentPage) {
+        dispatch(setCurrentPage(+params.currentPage))
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     const params = qs.stringify({
       activeCategory,
       activeSort,
       sortOrder,
+      currentPage,
     })
     navigate(`?${params}`)
-  }, [activeCategory, activeSort, sortOrder])
+  }, [activeCategory, activeSort, sortOrder, currentPage])
 
   useEffect(() => {
     let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
