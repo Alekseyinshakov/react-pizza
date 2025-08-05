@@ -5,7 +5,7 @@ import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
 import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
 import PizzaBlock from '../components/PizzaBlock.tsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,6 +18,7 @@ import { setCurrentPage } from '../redux/slices/paginationSlice.ts'
 const Main = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isSearch = useRef(false)
 
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
@@ -30,36 +31,7 @@ const Main = () => {
 
   const sortVariants = ['rating', 'price', 'title']
 
-  useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1))
-      console.log(params)
-      if (params.activeCategory) {
-        dispatch(setActiveCategory(+params.activeCategory))
-      }
-      if (params.sortOrder) {
-        dispatch(setSortOrder('' + params.sortOrder))
-      }
-      if (params.activeSort) {
-        dispatch(setActiveSort(+params.activeSort))
-      }
-      if (params.currentPage) {
-        dispatch(setCurrentPage(+params.currentPage))
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    const params = qs.stringify({
-      activeCategory,
-      activeSort,
-      sortOrder,
-      currentPage,
-    })
-    navigate(`?${params}`)
-  }, [activeCategory, activeSort, sortOrder, currentPage])
-
-  useEffect(() => {
+  const fetchPizzas = () => {
     let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
@@ -82,6 +54,43 @@ const Main = () => {
       .finally(function () {
         setIsLoading(false)
       })
+  }
+
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      console.log(params)
+      if (params.activeCategory) {
+        dispatch(setActiveCategory(+params.activeCategory))
+      }
+      if (params.sortOrder) {
+        dispatch(setSortOrder('' + params.sortOrder))
+      }
+      if (params.activeSort) {
+        dispatch(setActiveSort(+params.activeSort))
+      }
+      if (params.currentPage) {
+        dispatch(setCurrentPage(+params.currentPage))
+      }
+      isSearch.current = true
+    }
+  }, [])
+
+  useEffect(() => {
+    const params = qs.stringify({
+      activeCategory,
+      activeSort,
+      sortOrder,
+      currentPage,
+    })
+    navigate(`?${params}`)
+  }, [activeCategory, activeSort, sortOrder, currentPage])
+
+  useEffect(() => {
+    if (!isSearch.current) {
+      fetchPizzas()
+    }
+    isSearch.current = false
   }, [activeCategory, activeSort, sortOrder, searchString, currentPage])
 
   return (
