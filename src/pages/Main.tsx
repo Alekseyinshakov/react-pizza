@@ -19,6 +19,7 @@ const Main = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
+  const isMounted = useRef(false)
 
   const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
   const searchString = useSelector((state: RootState) => state.searchReducer.value)
@@ -77,13 +78,16 @@ const Main = () => {
   }, [])
 
   useEffect(() => {
-    const params = qs.stringify({
-      activeCategory,
-      activeSort,
-      sortOrder,
-      currentPage,
-    })
-    navigate(`?${params}`)
+    if (isMounted.current) {
+      const params = qs.stringify({
+        activeCategory,
+        activeSort,
+        sortOrder,
+        currentPage,
+      })
+      navigate(`?${params}`)
+    }
+    isMounted.current = true
   }, [activeCategory, activeSort, sortOrder, currentPage])
 
   useEffect(() => {
