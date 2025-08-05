@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 import { setActiveSort, setSortOrder } from '../redux/slices/sortSlice.ts'
 
 const Sort = () => {
+  const sortElement = useRef<HTMLDivElement>(null)
+
   const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
   const currentSortOrder = useSelector((state: RootState) => state.sortReducer.sortOrder)
 
@@ -28,8 +30,22 @@ const Sort = () => {
     dispatch(setSortOrder(order))
   }
 
+  useEffect(() => {
+    function clickHandler(event: MouseEvent) {
+      if (sortElement.current && !sortElement.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.body.addEventListener('click', clickHandler)
+
+    return () => {
+      document.body.removeEventListener('click', clickHandler)
+    }
+  }, [])
+
   return (
-    <div className='sort'>
+    <div className='sort' ref={sortElement}>
       <div className='sort__label'>
         <svg
           onClick={() => changeOrderHandler()}
