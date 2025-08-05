@@ -8,8 +8,35 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  pizzas: [],
-  totalPrice: 0,
+  pizzas: [
+    {
+      cartPizzaId: '1',
+      props: {
+        title: 'Пепперони',
+        id: 15,
+        size: 26,
+        type: 0,
+        imageUrl:
+          'https://raw.githubusercontent.com/Alekseyinshakov/react-pizza/refs/heads/develop/public/img/pizzas-img/pizza-2.jpg',
+        price: 777,
+      },
+      count: 2,
+    },
+    {
+      cartPizzaId: '2',
+      props: {
+        title: 'React-пицца',
+        id: 16,
+        size: 30,
+        type: 1,
+        imageUrl:
+          'https://raw.githubusercontent.com/Alekseyinshakov/react-pizza/refs/heads/develop/public/img/pizzas-img/pizza-1.jpg',
+        price: 666,
+      },
+      count: 3,
+    },
+  ],
+  totalPrice: 1300,
 }
 
 export const cartSlice = createSlice({
