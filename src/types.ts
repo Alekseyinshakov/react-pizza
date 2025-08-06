@@ -11,7 +11,7 @@ export type PizzaType = {
 
 export type cartPizzaType = {
   cartPizzaId: string
-  props: {
+  details: {
     title: string
     id: number
     size: number

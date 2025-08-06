@@ -11,7 +11,7 @@ const initialState: CartState = {
   pizzas: [
     {
       cartPizzaId: '1',
-      props: {
+      details: {
         title: 'Пепперони',
         id: 15,
         size: 26,
@@ -24,7 +24,7 @@ const initialState: CartState = {
     },
     {
       cartPizzaId: '2',
-      props: {
+      details: {
         title: 'React-пицца',
         id: 16,
         size: 30,
@@ -46,9 +46,9 @@ export const cartSlice = createSlice({
     addProduct: (state, action: PayloadAction<AddPizzaType>) => {
       const pizzaInCart = state.pizzas.find((item) => {
         return (
-          item.props.id === action.payload.id &&
-          item.props.type === action.payload.type &&
-          item.props.size === action.payload.size
+          item.details.id === action.payload.id &&
+          item.details.type === action.payload.type &&
+          item.details.size === action.payload.size
         )
       })
 
@@ -57,8 +57,8 @@ export const cartSlice = createSlice({
       } else {
         const newPizza: cartPizzaType = {
           cartPizzaId: crypto.randomUUID(),
-          count: 0,
-          props: {
+          count: 1,
+          details: {
             id: action.payload.id,
             imageUrl: action.payload.imageUrl,
             type: action.payload.type,
@@ -70,9 +70,12 @@ export const cartSlice = createSlice({
         state.pizzas.push(newPizza)
       }
     },
+    clearCart: (state) => {
+      state.pizzas = []
+    },
   },
 })
 
-export const { addProduct } = cartSlice.actions
+export const { addProduct, clearCart } = cartSlice.actions
 
 export default cartSlice.reducer

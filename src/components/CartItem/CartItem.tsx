@@ -1,17 +1,20 @@
-const CartItem = () => {
+import type { cartPizzaType } from '../../types.ts'
+
+const typeNames = ['тонкое', 'традиционное']
+
+const CartItem = (props: cartPizzaType) => {
+  console.log(props)
   return (
     <div className='cart__item'>
       <div className='cart__item-img-info'>
         <div className='cart__item-img'>
-          <img
-            className='pizza-block__image'
-            src='https://raw.githubusercontent.com/Alekseyinshakov/react-pizza/refs/heads/develop/public/img/pizzas-img/pizza-9.jpg'
-            alt='Pizza'
-          />
+          <img className='pizza-block__image' src={props.details.imageUrl} alt='Pizza' />
         </div>
         <div className='cart__item-info'>
-          <h3>Сырный цыпленок</h3>
-          <p>тонкое тесто, 26 см.</p>
+          <h3>{props.details.title}</h3>
+          <p>
+            {typeNames[props.details.type]} тесто, {props.details.size} см.
+          </p>
         </div>
       </div>
 
@@ -34,7 +37,7 @@ const CartItem = () => {
             />
           </svg>
         </div>
-        <b>2</b>
+        <b>{props.count}</b>
         <div className='button button--outline button--circle cart__item-count-plus'>
           <svg
             width='10'
@@ -55,7 +58,7 @@ const CartItem = () => {
         </div>
       </div>
       <div className='cart__item-price'>
-        <b>770 ₽</b>
+        <b>{props.details.price} ₽</b>
       </div>
       <div className='cart__item-remove'>
         <div className='button button--outline button--circle'>
