@@ -1,7 +1,16 @@
 import { Link } from 'react-router'
 import Search from './Search/Search.tsx'
+import { useSelector } from 'react-redux'
+import type { RootState } from '../redux/store.ts'
 
 const Header = () => {
+  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
+  const totalPrice = useSelector((state: RootState) => state.cartReducer.totalPrice)
+
+  const totalPizzasCount = cartPizzas.reduce((acc: number, curr) => {
+    return acc + curr.count
+  }, 0)
+
   return (
     <div className='header'>
       <div className='container'>
@@ -17,7 +26,7 @@ const Header = () => {
 
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
-            <span>520 ₽</span>
+            <span>{totalPrice} ₽</span>
             <div className='button__delimiter'></div>
             <svg
               width='18'
@@ -48,7 +57,7 @@ const Header = () => {
                 strokeLinejoin='round'
               />
             </svg>
-            <span>3</span>
+            <span>{totalPizzasCount}</span>
           </Link>
         </div>
       </div>

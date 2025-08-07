@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import type { AddPizzaType, PizzaType } from '../types.ts'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addProduct } from '../redux/slices/cartSlice.ts'
+import type { RootState } from '../redux/store.ts'
+
+const typeNames = ['тонкое', 'традиционное']
 
 const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => {
   const [sizeIndex, setsizeIndex] = useState(0)
   const [typesIndex, setTypesIndex] = useState(0)
 
-  const typeNames = ['тонкое', 'традиционное']
+  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
 
   const dispatch = useDispatch()
 
