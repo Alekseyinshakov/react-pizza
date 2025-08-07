@@ -83,7 +83,7 @@ const CartItem = (props: cartPizzaType) => {
         </div>
       </div>
       <div className='cart__item-price'>
-        <b>{props.details.price} ₽</b>
+        <b>{props.details.price * props.count} ₽</b>
       </div>
       <div
         onClick={() => {
