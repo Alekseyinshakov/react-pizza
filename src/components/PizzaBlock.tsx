@@ -10,7 +10,16 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => 
   const [size, setSize] = useState(sizes[0])
   const [typesIndex, setTypesIndex] = useState(0)
 
-  // const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
+  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
+
+  const thisPizzaInCart = cartPizzas.find((item) => {
+    if (item.details.id === id && item.details.size === size && item.details.type === typesIndex) {
+      return true
+    }
+    return false
+  })
+
+  const variantPizzaCounter = thisPizzaInCart && thisPizzaInCart.count
 
   const dispatch = useDispatch()
 
@@ -84,7 +93,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => 
             />
           </svg>
           <span>Добавить</span>
-          <i>0</i>
+          {variantPizzaCounter && <i>{variantPizzaCounter}</i>}
         </div>
       </div>
     </div>
