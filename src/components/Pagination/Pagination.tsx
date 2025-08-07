@@ -3,9 +3,7 @@ import PrevArrow from '../../assets/icons/arrow-prev.svg?react'
 import NextArrow from '../../assets/icons/arrow-next.svg?react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../redux/store.ts'
-import { paginationSlice, setCurrentPage } from '../../redux/slices/paginationSlice.ts'
-
-console.log(paginationSlice)
+import { setCurrentPage } from '../../redux/slices/paginationSlice.ts'
 
 type PaginationProps = {
   totalItems: number

@@ -1,11 +1,40 @@
 import { useState } from 'react'
-import type { PizzaType } from '../types.ts'
+import type { AddPizzaType, PizzaType } from '../types.ts'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProduct } from '../redux/slices/cartSlice.ts'
+import type { RootState } from '../redux/store.ts'
 
-const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaType) => {
-  const [sizeIndex, setsizeIndex] = useState(0)
+const typeNames = ['тонкое', 'традиционное']
+
+const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => {
+  const [size, setSize] = useState(sizes[0])
   const [typesIndex, setTypesIndex] = useState(0)
 
-  const typeNames = ['тонкое', 'традиционное']
+  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
+
+  const thisPizzaInCart = cartPizzas.find((item) => {
+    if (item.details.id === id && item.details.size === size && item.details.type === typesIndex) {
+      return true
+    }
+    return false
+  })
+
+  const variantPizzaCounter = thisPizzaInCart && thisPizzaInCart.count
+
+  const dispatch = useDispatch()
+
+  const addButtonHandler = () => {
+    const newPizza: AddPizzaType = {
+      id,
+      imageUrl,
+      type: typesIndex,
+      size,
+      price,
+      title,
+    }
+
+    dispatch(addProduct(newPizza))
+  }
 
   return (
     <div className='pizza-block'>
@@ -28,22 +57,27 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaType) => {
           })}
         </ul>
         <ul>
-          {sizes.map((size, i) => {
+          {sizes.map((item, i) => {
             return (
               <li
                 key={i}
                 onClick={() => {
-                  setsizeIndex(i)
+                  setSize(sizes[i])
                 }}
-                className={i === sizeIndex ? 'active' : ''}
+                className={item === size ? 'active' : ''}
               >
-                {size} см
+                {item} см
               </li>
             )
           })}
         </ul>
       </div>
-      <div className='pizza-block__bottom'>
+      <div
+        onClick={() => {
+          addButtonHandler()
+        }}
+        className='pizza-block__bottom'
+      >
         <div className='pizza-block__price'>от {price} ₽</div>
         <div className='button button--outline button--add'>
           <svg
@@ -59,7 +93,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }: PizzaType) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>0</i>
+          {variantPizzaCounter && <i>{variantPizzaCounter}</i>}
         </div>
       </div>
     </div>
