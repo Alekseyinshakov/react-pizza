@@ -7,10 +7,10 @@ import type { RootState } from '../redux/store.ts'
 const typeNames = ['тонкое', 'традиционное']
 
 const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => {
-  const [sizeIndex, setsizeIndex] = useState(0)
+  const [size, setSize] = useState(sizes[0])
   const [typesIndex, setTypesIndex] = useState(0)
 
-  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
+  // const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
 
   const dispatch = useDispatch()
 
@@ -19,7 +19,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => 
       id,
       imageUrl,
       type: typesIndex,
-      size: sizes[sizeIndex],
+      size,
       price,
       title,
     }
@@ -48,16 +48,16 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }: PizzaType) => 
           })}
         </ul>
         <ul>
-          {sizes.map((size, i) => {
+          {sizes.map((item, i) => {
             return (
               <li
                 key={i}
                 onClick={() => {
-                  setsizeIndex(i)
+                  setSize(sizes[i])
                 }}
-                className={i === sizeIndex ? 'active' : ''}
+                className={item === size ? 'active' : ''}
               >
-                {size} см
+                {item} см
               </li>
             )
           })}
