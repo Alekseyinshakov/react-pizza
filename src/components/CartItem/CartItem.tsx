@@ -1,9 +1,24 @@
 import type { cartPizzaType } from '../../types.ts'
+import { clearCartItem, increment, decrement } from '../../redux/slices/cartSlice.ts'
+import { useDispatch } from 'react-redux'
 
 const typeNames = ['тонкое', 'традиционное']
 
 const CartItem = (props: cartPizzaType) => {
-  console.log(props)
+  const dispatch = useDispatch()
+
+  const deleteCartItem = () => {
+    dispatch(clearCartItem(props.cartPizzaId))
+  }
+
+  const incrementHandler = () => {
+    dispatch(increment(props.cartPizzaId))
+  }
+
+  const decrementHandler = () => {
+    dispatch(decrement(props.cartPizzaId))
+  }
+
   return (
     <div className='cart__item'>
       <div className='cart__item-img-info'>
@@ -19,7 +34,12 @@ const CartItem = (props: cartPizzaType) => {
       </div>
 
       <div className='cart__item-count'>
-        <div className='button button--outline button--circle cart__item-count-minus'>
+        <div
+          onClick={() => {
+            decrementHandler()
+          }}
+          className='button button--outline button--circle cart__item-count-minus'
+        >
           <svg
             width='10'
             height='10'
@@ -38,7 +58,12 @@ const CartItem = (props: cartPizzaType) => {
           </svg>
         </div>
         <b>{props.count}</b>
-        <div className='button button--outline button--circle cart__item-count-plus'>
+        <div
+          onClick={() => {
+            incrementHandler()
+          }}
+          className='button button--outline button--circle cart__item-count-plus'
+        >
           <svg
             width='10'
             height='10'
@@ -60,7 +85,12 @@ const CartItem = (props: cartPizzaType) => {
       <div className='cart__item-price'>
         <b>{props.details.price} ₽</b>
       </div>
-      <div className='cart__item-remove'>
+      <div
+        onClick={() => {
+          deleteCartItem()
+        }}
+        className='cart__item-remove'
+      >
         <div className='button button--outline button--circle'>
           <svg
             width='10'

@@ -5,6 +5,7 @@ import type { RootState } from '../redux/store.ts'
 import CartIcon from '../assets/icons/cartIcon.svg?react'
 import ClearCart from '../assets/icons/clearCart.svg?react'
 import { clearCart } from '../redux/slices/cartSlice.ts'
+import CartEmpty from '../components/CartEmpty.tsx'
 
 const CartPage = () => {
   const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
@@ -18,6 +19,10 @@ const CartPage = () => {
 
   const clearCartHandler = () => {
     dispatch(clearCart())
+  }
+
+  if (!cartPizzas.length) {
+    return <CartEmpty />
   }
 
   return (
@@ -52,7 +57,7 @@ const CartPage = () => {
           </span>
           <span>
             {' '}
-            Сумма заказа: <b>{totalPrice}</b>{' '}
+            Сумма заказа: <b>{totalPrice} ₽</b>{' '}
           </span>
         </div>
         <div className='cart__bottom-buttons'>
