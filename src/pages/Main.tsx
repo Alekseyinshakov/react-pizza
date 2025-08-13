@@ -1,12 +1,10 @@
-import axios from 'axios'
 import qs from 'qs'
 
 import Categories from '../components/Categories.tsx'
 import Sort from '../components/Sort.tsx'
 import PizzaSkeleton from '../components/PizzaSkeleton.tsx'
 import PizzaBlock from '../components/PizzaBlock.tsx'
-import { useEffect, useRef, useState } from 'react'
-import type { PizzaType } from '../types.ts'
+import { useEffect, useRef } from 'react'
 import Pagination from '../components/Pagination/Pagination.tsx'
 import { useSelector, useDispatch } from 'react-redux'
 import type { AppDispatch, RootState } from '../redux/store.ts'
@@ -40,48 +38,23 @@ const Main = () => {
   const currentPage = useSelector(
     (state: RootState) => state.paginationReducer.value
   )
-
-  const [products, setProducts] = useState<PizzaType[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { products, status, error } = useSelector(
+    (state: RootState) => state.productsReducer
+  )
 
   const sortVariants = ['rating', 'price', 'title']
 
   const fetchPizzas = () => {
-    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
-    if (activeCategory) {
-      URL += `&category=${activeCategory}`
-    }
-    if (searchString) {
-      URL += `&search=${searchString}`
-    }
-
-    setIsLoading(true)
-
-    axios
-      .get(URL)
-      .then(function (response) {
-        setProducts(response.data)
+    dispatch(
+      getProducts({
+        activeCategory,
+        currentPage,
+        sortVariants,
+        activeSort,
+        sortOrder,
+        searchString,
       })
-      .catch(function (error) {
-        setProducts([])
-        console.log(error)
-      })
-      .finally(function () {
-        setIsLoading(false)
-      })
-
-    setTimeout(() => {
-      dispatch(
-        getProducts({
-          activeCategory,
-          currentPage,
-          sortVariants,
-          activeSort,
-          sortOrder,
-          searchString,
-        })
-      )
-    }, 1500)
+    )
   }
 
   useEffect(() => {
@@ -138,13 +111,15 @@ const Main = () => {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {isLoading
-          ? new Array(4).fill(7).map((_, index) => {
-              return <PizzaSkeleton key={index} />
-            })
-          : products.map((obj) => {
-              return <PizzaBlock key={obj.id} {...obj} />
-            })}
+        {status === 'loading' &&
+          new Array(4).fill(7).map((_, index) => {
+            return <PizzaSkeleton key={index} />
+          })}
+        {status === 'success' &&
+          products.map((obj) => {
+            return <PizzaBlock key={obj.id} {...obj} />
+          })}
+        {status === 'error' && <div>{error}</div>}
       </div>
       <Pagination totalItems={10} limit={4} />
     </>

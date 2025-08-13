@@ -6,8 +6,6 @@ import axios from 'axios'
 export const getProducts = createAsyncThunk(
   'pizzas/getProducts',
   async (params: fetchParams) => {
-    console.log('here 2')
-
     const {
       activeCategory,
       currentPage,
@@ -34,11 +32,13 @@ export const getProducts = createAsyncThunk(
 export interface ProductState {
   products: PizzaType[]
   status: 'loading' | 'success' | 'error'
+  error: string | null
 }
 
 const initialState: ProductState = {
   products: [],
   status: 'loading',
+  error: null,
 }
 
 export const productSlice = createSlice({
@@ -59,9 +59,9 @@ export const productSlice = createSlice({
         state.products = action.payload
         state.status = 'success'
       })
-      .addCase(getProducts.rejected, (state) => {
-        state.products = []
+      .addCase(getProducts.rejected, (state, action) => {
         state.status = 'error'
+        state.error = action.error.message || 'Something went wrong'
       })
   },
 })
