@@ -50,11 +50,19 @@ export const productSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(getProducts.fulfilled, (state, action) => {
-      // Add user to the state array
-      console.log('from extra', action.payload)
-    })
+    builder
+      .addCase(getProducts.pending, (state) => {
+        state.products = []
+        state.status = 'loading'
+      })
+      .addCase(getProducts.fulfilled, (state, action) => {
+        state.products = action.payload
+        state.status = 'success'
+      })
+      .addCase(getProducts.rejected, (state) => {
+        state.products = []
+        state.status = 'error'
+      })
   },
 })
 
