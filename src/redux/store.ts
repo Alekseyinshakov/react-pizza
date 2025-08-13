@@ -4,6 +4,7 @@ import searchReducer from './slices/searchSlice.ts'
 import sortReducer from './slices/sortSlice.ts'
 import paginationReducer from './slices/paginationSlice.ts'
 import cartReducer from './slices/cartSlice.ts'
+import productsReducer from './slices/productSlice.ts'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     sortReducer,
     paginationReducer,
     cartReducer,
+    productsReducer,
   },
 })
 
