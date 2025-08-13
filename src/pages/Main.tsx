@@ -9,23 +9,37 @@ import { useEffect, useRef, useState } from 'react'
 import type { PizzaType } from '../types.ts'
 import Pagination from '../components/Pagination/Pagination.tsx'
 import { useSelector, useDispatch } from 'react-redux'
-import type { RootState } from '../redux/store.ts'
+import type { AppDispatch, RootState } from '../redux/store.ts'
 import { useNavigate } from 'react-router'
 import { setActiveCategory } from '../redux/slices/categorySlice.ts'
-import { setActiveSort, setSortOrder } from '../redux/slices/sortSlice.ts'
+import {
+  setActiveSort,
+  setSortOrder,
+} from '../redux/slices/sortSlice.ts'
 import { setCurrentPage } from '../redux/slices/paginationSlice.ts'
+import { getProducts } from '../redux/slices/productSlice.ts'
 
 const Main = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
-  const searchString = useSelector((state: RootState) => state.searchReducer.value)
-  const activeSort = useSelector((state: RootState) => state.sortReducer.sortIndex)
-  const sortOrder = useSelector((state: RootState) => state.sortReducer.sortOrder)
-  const currentPage = useSelector((state: RootState) => state.paginationReducer.value)
+  const activeCategory = useSelector(
+    (state: RootState) => state.categoryReducer.value
+  )
+  const searchString = useSelector(
+    (state: RootState) => state.searchReducer.value
+  )
+  const activeSort = useSelector(
+    (state: RootState) => state.sortReducer.sortIndex
+  )
+  const sortOrder = useSelector(
+    (state: RootState) => state.sortReducer.sortOrder
+  )
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationReducer.value
+  )
 
   const [products, setProducts] = useState<PizzaType[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -55,6 +69,19 @@ const Main = () => {
       .finally(function () {
         setIsLoading(false)
       })
+
+    setTimeout(() => {
+      dispatch(
+        getProducts({
+          activeCategory,
+          currentPage,
+          sortVariants,
+          activeSort,
+          sortOrder,
+          searchString,
+        })
+      )
+    }, 1500)
   }
 
   useEffect(() => {
@@ -95,7 +122,13 @@ const Main = () => {
       fetchPizzas()
     }
     isSearch.current = false
-  }, [activeCategory, activeSort, sortOrder, searchString, currentPage])
+  }, [
+    activeCategory,
+    activeSort,
+    sortOrder,
+    searchString,
+    currentPage,
+  ])
 
   return (
     <>

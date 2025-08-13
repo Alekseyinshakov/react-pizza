@@ -30,3 +30,12 @@ export type AddPizzaType = {
   price: number
   title: string
 }
+
+export type fetchParams = {
+  activeCategory: number
+  currentPage: number
+  sortVariants: string[]
+  activeSort: number
+  sortOrder: string
+  searchString: string
+}
