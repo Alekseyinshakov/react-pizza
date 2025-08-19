@@ -4,8 +4,12 @@ import { useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 
 const Header = () => {
-  const cartPizzas = useSelector((state: RootState) => state.cartReducer.pizzas)
-  const totalPrice = useSelector((state: RootState) => state.cartReducer.totalPrice)
+  const cartPizzas = useSelector(
+    (state: RootState) => state.cartReducer.pizzas
+  )
+  const totalPrice = useSelector(
+    (state: RootState) => state.cartReducer.totalPrice
+  )
 
   const totalPizzasCount = cartPizzas.reduce((acc: number, curr) => {
     return acc + curr.count
@@ -15,7 +19,11 @@ const Header = () => {
     <div className='header'>
       <div className='container'>
         <Link to={'/'} className='header__logo'>
-          <img width='38' src='img/pizza-logo.svg' alt='PizzaBlock logo' />
+          <img
+            width='38'
+            src='/img/pizza-logo.svg'
+            alt='PizzaBlock logo'
+          />
           <div>
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>

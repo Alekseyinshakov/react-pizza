@@ -4,6 +4,7 @@ import Header from './components/Header.tsx'
 import Main from './pages/Main.tsx'
 import NotFoundPage from './pages/NotFoundPage.tsx'
 import CartPage from './pages/CartPage.tsx'
+import DetailedPage from './pages/DetailedPage.tsx'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Routes>
               <Route index element={<Main />} />
               <Route path='cart' element={<CartPage />} />
+              <Route path='detailed/:id' element={<DetailedPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>
           </div>
