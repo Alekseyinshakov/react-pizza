@@ -1,5 +1,5 @@
 export type PizzaType = {
-  id: number
+  id: string
   imageUrl: string
   title: string
   types: number[]
@@ -13,7 +13,7 @@ export type cartPizzaType = {
   cartPizzaId: string
   details: {
     title: string
-    id: number
+    id: string
     size: number
     type: number
     imageUrl: string
@@ -23,7 +23,7 @@ export type cartPizzaType = {
 }
 
 export type AddPizzaType = {
-  id: number
+  id: string
   imageUrl: string
   type: number
   size: number

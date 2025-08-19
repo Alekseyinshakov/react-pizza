@@ -410,6 +410,16 @@ body {
       margin-bottom: 20px;
     }
   }
+  &__selector {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+.pizza-block__bottom-detailed {
+  width: 100%;
 }
 
 .preloader-container {
