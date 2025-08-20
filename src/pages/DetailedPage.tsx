@@ -110,7 +110,11 @@ const DetailedPage = () => {
         <div className='detailed__inner'>
           <div className='detailed__column'>
             <h2 className='title'>{pizzaData?.title}</h2>
-            <img src={pizzaData?.imageUrl} alt='pizza-image' />
+            <img
+              className='detailed__image'
+              src={pizzaData?.imageUrl}
+              alt='pizza-image'
+            />
           </div>
           <div className='detailed__column'>
             <h3 className='detailed__subtitle'>Ингридиенты:</h3>

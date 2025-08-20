@@ -383,6 +383,9 @@ body {
 }
 
 .detailed {
+  &__image {
+    width: 100%;
+  }
   &__subtitle {
     margin-bottom: 20px;
     font-size: 22px;
