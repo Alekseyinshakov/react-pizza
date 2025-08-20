@@ -1,16 +1,19 @@
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
-import type { PizzaType } from '../types.ts'
+import type { AddPizzaType, PizzaType } from '../types.ts'
 import axios from 'axios'
 import { MoonLoader } from 'react-spinners'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
+import { addProduct } from '../redux/slices/cartSlice.ts'
 
 const typeNames = ['тонкое', 'традиционное']
 
 type StatusType = 'loading' | 'success' | 'error'
 
 const DetailedPage = () => {
+  const dispatch = useDispatch()
+
   const { id } = useParams<{ id: string }>()
 
   const [pizzaData, setPizzaData] = useState<null | PizzaType>()
@@ -19,16 +22,33 @@ const DetailedPage = () => {
   const [size, setSize] = useState(pizzaData?.sizes[0])
   const [typesIndex, setTypesIndex] = useState(0)
 
+  const [imageUrl, setImageUrl] = useState<string>('')
+  const [title, setTitle] = useState<string>('')
+  const [price, setPrice] = useState<number>(0)
+
   const cartPizzas = useSelector(
     (state: RootState) => state.cartReducer.pizzas
   )
 
-  let [variantPizzaCounter, setvariantPizzaCounter] = useState<
+  const [variantPizzaCounter, setvariantPizzaCounter] = useState<
     number | undefined
   >(undefined)
 
   const addButtonHandler = () => {
-    console.log('add pizza')
+    console.log(id)
+    console.log(imageUrl)
+    if (id && imageUrl && size && price && title) {
+      const newPizza: AddPizzaType = {
+        id,
+        imageUrl,
+        type: typesIndex,
+        size,
+        price,
+        title,
+      }
+      console.log(newPizza)
+      dispatch(addProduct(newPizza))
+    }
   }
 
   useEffect(() => {
@@ -40,6 +60,9 @@ const DetailedPage = () => {
         setPizzaData(response.data)
         setStatus('success')
         setSize(response.data.sizes[0])
+        setImageUrl(response.data.imageUrl)
+        setTitle(response.data.title)
+        setPrice(response.data.price)
       } catch (error) {
         console.log('Error:', error)
       }
@@ -63,7 +86,7 @@ const DetailedPage = () => {
     setvariantPizzaCounter(thisPizzaInCart && thisPizzaInCart.count)
 
     console.log(variantPizzaCounter)
-  }, [size, typesIndex])
+  }, [size, typesIndex, cartPizzas])
 
   return (
     <div className='detailed__container'>
@@ -120,16 +143,16 @@ const DetailedPage = () => {
                 })}
               </ul>
             </div>
-            <div
-              onClick={() => {
-                addButtonHandler()
-              }}
-              className='pizza-block__bottom pizza-block__bottom-detailed'
-            >
+            <div className='pizza-block__bottom pizza-block__bottom-detailed'>
               <div className='pizza-block__price'>
                 от {pizzaData?.price} ₽
               </div>
-              <div className='button button--outline button--add'>
+              <div
+                onClick={() => {
+                  addButtonHandler()
+                }}
+                className='button button--outline button--add'
+              >
                 <svg
                   width='12'
                   height='12'

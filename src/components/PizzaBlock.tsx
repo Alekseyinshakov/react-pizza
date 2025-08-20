@@ -93,14 +93,14 @@ const PizzaBlock = ({
           })}
         </ul>
       </div>
-      <div
-        onClick={() => {
-          addButtonHandler()
-        }}
-        className='pizza-block__bottom'
-      >
+      <div className='pizza-block__bottom'>
         <div className='pizza-block__price'>от {price} ₽</div>
-        <div className='button button--outline button--add'>
+        <div
+          onClick={() => {
+            addButtonHandler()
+          }}
+          className='button button--outline button--add'
+        >
           <svg
             width='12'
             height='12'
