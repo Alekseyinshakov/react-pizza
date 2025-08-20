@@ -64,6 +64,7 @@ const Search = () => {
           className={s.cross}
           onClick={() => {
             dispatch(setSearchString(''))
+            setInputValue('')
           }}
           onMouseDown={focusInput}
         />
