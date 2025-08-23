@@ -2,12 +2,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 
 import { setActiveCategory } from '../redux/slices/categorySlice.ts'
+import { setCurrentPage } from '../redux/slices/paginationSlice.ts'
 
 const Categories = () => {
-  const activeCategory = useSelector((state: RootState) => state.categoryReducer.value)
+  const activeCategory = useSelector(
+    (state: RootState) => state.categoryReducer.value
+  )
   const dispatch = useDispatch()
 
-  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые']
+  const categories = [
+    'Все',
+    'Мясные',
+    'Вегетарианская',
+    'Гриль',
+    'Острые',
+    'Закрытые',
+  ]
 
   return (
     <div className='categories'>
@@ -16,7 +26,10 @@ const Categories = () => {
           return (
             <li
               key={index}
-              onClick={() => dispatch(setActiveCategory(index))}
+              onClick={() => {
+                dispatch(setActiveCategory(index))
+                dispatch(setCurrentPage(1))
+              }}
               className={activeCategory === index ? 'active' : ''}
             >
               {value}

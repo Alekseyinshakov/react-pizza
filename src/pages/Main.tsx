@@ -38,7 +38,7 @@ const Main = () => {
   const currentPage = useSelector(
     (state: RootState) => state.paginationReducer.value
   )
-  const { products, status, error } = useSelector(
+  const { products, status, error, xTotal } = useSelector(
     (state: RootState) => state.productsReducer
   )
 
@@ -121,7 +121,7 @@ const Main = () => {
           })}
         {status === 'error' && <div>{error}</div>}
       </div>
-      <Pagination totalItems={10} limit={4} />
+      <Pagination totalItems={xTotal} limit={4} />
     </>
   )
 }

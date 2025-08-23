@@ -12,6 +12,7 @@ import React, {
 import { setSearchString } from '../../redux/slices/searchSlice.ts'
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../../redux/store.ts'
+import { setCurrentPage } from '../../redux/slices/paginationSlice.ts'
 
 const Search = () => {
   const searchString = useSelector(
@@ -24,6 +25,7 @@ const Search = () => {
   const sendQuery = useCallback(
     debounce((value: string) => {
       dispatch(setSearchString(value))
+      dispatch(setCurrentPage(1))
     }, 1000),
     []
   )

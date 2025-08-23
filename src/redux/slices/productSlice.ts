@@ -25,17 +25,22 @@ export const getProducts = createAsyncThunk(
 
     const response = await axios.get(URL)
 
-    return response.data
+    return {
+      data: response.data,
+      xTotal: response.headers['x-total-count'],
+    }
   }
 )
 
 export interface ProductState {
+  xTotal: number
   products: PizzaType[]
   status: 'loading' | 'success' | 'error'
   error: string | null
 }
 
 const initialState: ProductState = {
+  xTotal: 0,
   products: [],
   status: 'loading',
   error: null,
@@ -56,7 +61,8 @@ export const productSlice = createSlice({
         state.status = 'loading'
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        state.products = action.payload
+        state.products = action.payload.data
+        state.xTotal = action.payload.xTotal
         state.status = 'success'
       })
       .addCase(getProducts.rejected, (state, action) => {

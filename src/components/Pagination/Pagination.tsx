@@ -11,7 +11,9 @@ type PaginationProps = {
 }
 
 const Pagination = ({ totalItems, limit }: PaginationProps) => {
-  const currentPage = useSelector((state: RootState) => state.paginationReducer.value)
+  const currentPage = useSelector(
+    (state: RootState) => state.paginationReducer.value
+  )
   const dispatch = useDispatch()
   const totalPages = Math.ceil(totalItems / limit)
 
