@@ -72,7 +72,7 @@ const DetailedPage = () => {
     const getPizza = async () => {
       try {
         const response = await axios.get(
-          `https://68769703814c0dfa653c9f80.mockapi.io/products/${id}`
+          `https://react-pizza-api-one.vercel.app/${id}`
         )
         setPizzaData(response.data)
         setStatus('success')

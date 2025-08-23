@@ -15,12 +15,12 @@ export const getProducts = createAsyncThunk(
       searchString,
     } = params
 
-    let URL = `https://68769703814c0dfa653c9f80.mockapi.io/products?limit=4&page=${currentPage}&sortBy=${sortVariants[activeSort]}&order=${sortOrder}`
+    let URL = `https://react-pizza-api-one.vercel.app/products?_limit=4&_page=${currentPage}&_sort=${sortVariants[activeSort]}&_order=${sortOrder}`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
     }
     if (searchString) {
-      URL += `&search=${searchString}`
+      URL += `&q=${searchString}`
     }
 
     const response = await axios.get(URL)
