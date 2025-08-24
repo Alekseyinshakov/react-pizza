@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk(
       searchString,
     } = params
 
-    let URL = `https://react-pizza-api-one.vercel.app/products?_limit=4&_page=${currentPage}&_sort=${sortVariants[activeSort]}&_order=${sortOrder}`
+    let URL = `https://react-pizza-api-fljg.vercel.app/products?_limit=4&_page=${currentPage}&_sort=${sortVariants[activeSort]}&_order=${sortOrder}`
     if (activeCategory) {
       URL += `&category=${activeCategory}`
     }
