@@ -45,12 +45,14 @@ body {
     justify-content: center;
     row-gap: 65px;
     column-gap: 35px;
+    min-height: 466px;
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 48px;
     @media (max-width: 1300px) {
       flex-direction: column;
       row-gap: 20px;
