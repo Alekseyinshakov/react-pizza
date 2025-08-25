@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { cartPizzaType, AddPizzaType } from '../../types.ts'
+import { getCartDataFromLS } from '../../utils/getCartDataFromLS.ts'
 
 export interface CartState {
   pizzas: cartPizzaType[]
@@ -8,35 +9,8 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  pizzas: [
-    // {
-    //   cartPizzaId: '1',
-    //   details: {
-    //     title: 'Пепперони',
-    //     id: 15,
-    //     size: 26,
-    //     type: 0,
-    //     imageUrl:
-    //       'https://raw.githubusercontent.com/Alekseyinshakov/react-pizza/refs/heads/develop/public/img/pizzas-img/pizza-2.jpg',
-    //     price: 777,
-    //   },
-    //   count: 2,
-    // },
-    // {
-    //   cartPizzaId: '2',
-    //   details: {
-    //     title: 'React-пицца',
-    //     id: 16,
-    //     size: 30,
-    //     type: 1,
-    //     imageUrl:
-    //       'https://raw.githubusercontent.com/Alekseyinshakov/react-pizza/refs/heads/develop/public/img/pizzas-img/pizza-1.jpg',
-    //     price: 666,
-    //   },
-    //   count: 3,
-    // },
-  ],
-  totalPrice: 0,
+  pizzas: getCartDataFromLS().pizzas || [],
+  totalPrice: getCartDataFromLS().totalPrice || 0,
 }
 
 export const cartSlice = createSlice({
@@ -78,21 +52,29 @@ export const cartSlice = createSlice({
       state.totalPrice = calcTotalPrice(state.pizzas)
     },
     clearCartItem: (state, action: PayloadAction<string>) => {
-      state.pizzas = state.pizzas.filter((item) => item.cartPizzaId !== action.payload)
+      state.pizzas = state.pizzas.filter(
+        (item) => item.cartPizzaId !== action.payload
+      )
 
       state.totalPrice = calcTotalPrice(state.pizzas)
     },
     increment: (state, action: PayloadAction<string>) => {
-      const currentItem = state.pizzas.find((item) => item.cartPizzaId === action.payload)!
+      const currentItem = state.pizzas.find(
+        (item) => item.cartPizzaId === action.payload
+      )!
       currentItem.count++
 
       state.totalPrice = calcTotalPrice(state.pizzas)
     },
     decrement: (state, action: PayloadAction<string>) => {
-      const currentItem = state.pizzas.find((item) => item.cartPizzaId === action.payload)!
+      const currentItem = state.pizzas.find(
+        (item) => item.cartPizzaId === action.payload
+      )!
 
       if (currentItem.count === 1) {
-        state.pizzas = state.pizzas.filter((item) => item !== currentItem)
+        state.pizzas = state.pizzas.filter(
+          (item) => item !== currentItem
+        )
       } else {
         currentItem.count--
       }
@@ -108,6 +90,12 @@ function calcTotalPrice(cartItems: cartPizzaType[]): number {
   }, 0)
 }
 
-export const { decrement, increment, addProduct, clearCart, clearCartItem } = cartSlice.actions
+export const {
+  decrement,
+  increment,
+  addProduct,
+  clearCart,
+  clearCartItem,
+} = cartSlice.actions
 
 export default cartSlice.reducer

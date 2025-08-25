@@ -14,8 +14,13 @@ const Header = () => {
   }, 0)
 
   useEffect(() => {
-    console.log('save to ls')
-  }, [pizzas])
+    const cartDataJson = JSON.stringify({
+      pizzas,
+      totalPrice,
+    })
+
+    window.localStorage.setItem('cartDataJson', cartDataJson)
+  }, [pizzas, totalPrice])
 
   return (
     <div className='header'>
