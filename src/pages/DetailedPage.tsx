@@ -40,8 +40,6 @@ const DetailedPage = () => {
   >(undefined)
 
   const addButtonHandler = () => {
-    console.log(id)
-    console.log(imageUrl)
     if (id && imageUrl && size && price && title) {
       const newPizza: AddPizzaType = {
         id,
@@ -51,7 +49,7 @@ const DetailedPage = () => {
         price,
         title,
       }
-      console.log(newPizza)
+
       dispatch(addProduct(newPizza))
     }
   }
@@ -210,7 +208,6 @@ const getPizzaInCart = (
   typesIndex: number
 ) => {
   return cartPizzas.find((item) => {
-    console.log(item)
     if (
       item.details.id === id &&
       item.details.size === size &&

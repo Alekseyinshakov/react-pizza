@@ -2,18 +2,20 @@ import { Link } from 'react-router'
 import Search from './Search/Search.tsx'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
+import { useEffect } from 'react'
 
 const Header = () => {
-  const cartPizzas = useSelector(
-    (state: RootState) => state.cartReducer.pizzas
-  )
-  const totalPrice = useSelector(
-    (state: RootState) => state.cartReducer.totalPrice
+  const { pizzas, totalPrice } = useSelector(
+    (state: RootState) => state.cartReducer
   )
 
-  const totalPizzasCount = cartPizzas.reduce((acc: number, curr) => {
+  const totalPizzasCount = pizzas.reduce((acc: number, curr) => {
     return acc + curr.count
   }, 0)
+
+  useEffect(() => {
+    console.log('save to ls')
+  }, [pizzas])
 
   return (
     <div className='header'>
