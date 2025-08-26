@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '../redux/store.ts'
 import { addProduct, decrement } from '../redux/slices/cartSlice.ts'
 import ProductCounter from '../components/ProductCounter/ProductCounter.tsx'
+import { calculateFinalPrice } from '../utils/calculateFinalPrice.ts'
 
 const typeNames = ['тонкое', 'традиционное']
 
@@ -31,6 +32,12 @@ const DetailedPage = () => {
   const [title, setTitle] = useState<string>('')
   const [price, setPrice] = useState<number>(0)
 
+  const finalPrice = calculateFinalPrice(
+    price,
+    typesIndex,
+    size || 26
+  )
+
   const cartPizzas = useSelector(
     (state: RootState) => state.cartReducer.pizzas
   )
@@ -46,7 +53,7 @@ const DetailedPage = () => {
         imageUrl,
         type: typesIndex,
         size,
-        price,
+        price: finalPrice,
         title,
       }
 
@@ -157,7 +164,7 @@ const DetailedPage = () => {
             </div>
             <div className='pizza-block__bottom pizza-block__bottom-detailed'>
               <div className='pizza-block__price'>
-                от {pizzaData?.price} ₽
+                от {finalPrice} ₽
               </div>
 
               {!variantPizzaCounter && (

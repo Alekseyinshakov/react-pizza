@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addProduct } from '../redux/slices/cartSlice.ts'
 import type { RootState } from '../redux/store.ts'
 import { Link } from 'react-router'
+import { calculateFinalPrice } from '../utils/calculateFinalPrice.ts'
 
 const typeNames = ['тонкое', 'традиционное']
 
@@ -18,6 +19,9 @@ const PizzaBlock = ({
   const [size, setSize] = useState(sizes[0])
   const [typesIndex, setTypesIndex] = useState(0)
 
+  const finalPrice = calculateFinalPrice(price, typesIndex, size)
+
+  console.log(sizes)
   const cartPizzas = useSelector(
     (state: RootState) => state.cartReducer.pizzas
   )
@@ -43,7 +47,7 @@ const PizzaBlock = ({
       imageUrl,
       type: typesIndex,
       size,
-      price,
+      price: finalPrice,
       title,
     }
 
@@ -94,7 +98,7 @@ const PizzaBlock = ({
         </ul>
       </div>
       <div className='pizza-block__bottom'>
-        <div className='pizza-block__price'>{price} ₽</div>
+        <div className='pizza-block__price'>{finalPrice} ₽</div>
         <div
           onClick={() => {
             addButtonHandler()

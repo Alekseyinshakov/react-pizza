@@ -9,8 +9,8 @@ export interface CartState {
 }
 
 const initialState: CartState = {
-  pizzas: getCartDataFromLS().pizzas || [],
-  totalPrice: getCartDataFromLS().totalPrice || 0,
+  pizzas: getCartDataFromLS()?.pizzas || [],
+  totalPrice: getCartDataFromLS()?.totalPrice || 0,
 }
 
 export const cartSlice = createSlice({
